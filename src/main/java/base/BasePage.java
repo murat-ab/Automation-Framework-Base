@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class BasePage {
 
     public static WebDriver driver;
     private String url;
     private Properties prop;
+    public static String screenShotDestinationPath;
 
     public BasePage() throws IOException {
         prop = new Properties();
@@ -30,7 +30,6 @@ public class BasePage {
     }
 
     public WebDriver getDriver() {
-
         if (prop.getProperty("browser").equals("chrome")) {
             driver = new ChromeDriver();
 
@@ -40,10 +39,6 @@ public class BasePage {
         } else {
             driver = new EdgeDriver();
         }
-
-//        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
         return driver;
     }
 
@@ -52,13 +47,24 @@ public class BasePage {
         return url;
     }
 
-    public void takeSnapShot(WebDriver webdriver) throws IOException {
-        File srcFile = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
-        File destFile = new File(System.getProperty("user.dir") + "\\target\\screenshots\\" + timestamp() + ".png");
-        FileUtils.copyFile(srcFile, destFile);
+    public static String takeSnapShot(String name) {
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String destFile = System.getProperty("user.dir") + "\\target\\screenshots\\" + timestamp() + ".png";
+        screenShotDestinationPath = destFile;
+
+        try {
+            FileUtils.copyFile(srcFile, new File(destFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 
-    public String timestamp() {
+    public static String timestamp() {
         return new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
+    }
+
+    public static String getScreenShotDestinationPath() {
+        return screenShotDestinationPath;
     }
 }

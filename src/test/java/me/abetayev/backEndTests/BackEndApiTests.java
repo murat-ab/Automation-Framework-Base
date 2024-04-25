@@ -1,24 +1,18 @@
-package me.abetayev;
+package me.abetayev.backEndTests;
 
 import io.restassured.RestAssured;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 
 public class BackEndApiTests {
 
-    private static final Logger LOGGER = LogManager.getLogger(BackEndApiTests.class);
-
     @Test
     public void basicBackEndTest() {
-        LOGGER.info("Running basic backend test");
         RestAssured
                 .given()
                 .header("Accept", "application/json")
                 .when()
-                .get("https://andreidobra.com")
+                .get("https://abetayev.me")
                 .then()
                 .assertThat().statusCode(200);
     }
-
 }

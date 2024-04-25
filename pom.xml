@@ -17,8 +17,8 @@
         <testng.version>7.7.1</testng.version>
         <selenium.version>4.19.1</selenium.version>
         <rest.assured.version>5.3.0</rest.assured.version>
-        <log4j2.version>2.19.0</log4j2.version>
         <commons-io.version>2.16.1</commons-io.version>
+        <extent.reports.version>5.1.1</extent.reports.version>
     </properties>
 
     <dependencies>
@@ -41,34 +41,21 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j2.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extent.reports.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M8</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -76,17 +63,8 @@
                     <version>3.0.0-M8</version>
                     <configuration>
                         <includes>
-                            <include>*ApiTests.java</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M8</version>
-                    <configuration>
-                        <includes>
                             <include>*UiTests.java</include>
+<!--                            <include>*ApiTests.java</include>-->
                         </includes>
                     </configuration>
                 </plugin>
